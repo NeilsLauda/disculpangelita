@@ -47,6 +47,13 @@ p {
   justify-content: center;
 }
 
+#uploadForm {
+  margin-top: 1em;
+  display: flex;
+  gap: 0.5em;
+  justify-content: center;
+}
+
 button {
   padding: 0.6em 1.5em;
   font-size: 1em;

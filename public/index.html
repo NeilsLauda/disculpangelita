@@ -18,7 +18,13 @@
   <div class="controls">
     <button onclick="anteriorFoto()">← Anterior</button>
     <button onclick="siguienteFoto()">Siguiente →</button>
+    <button onclick="eliminarFotoActual()">Eliminar</button>
   </div>
+
+  <form id="uploadForm">
+    <input type="file" id="nuevaFoto" accept="image/*" />
+    <button type="submit">Agregar foto</button>
+  </form>
 
   <script src="script.js"></script>
 </body>
