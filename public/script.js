@@ -11,6 +11,16 @@ const mostrarFoto = () => {
   }, 200);
 };
 
+const cargarFotos = () => {
+  fetch('/api/images')
+    .then((res) => res.json())
+    .then((data) => {
+      fotos = data.images;
+      indice = 0;
+      mostrarFoto();
+    });
+};
+
 const siguienteFoto = () => {
   indice = (indice + 1) % fotos.length;
   mostrarFoto();
@@ -21,9 +31,26 @@ const anteriorFoto = () => {
   mostrarFoto();
 };
 
-fetch('/api/images')
-  .then((res) => res.json())
-  .then((data) => {
-    fotos = data.images;
-    mostrarFoto();
-  });
+
+const eliminarFotoActual = () => {
+  if (!fotos.length) return;
+  const foto = fotos[indice];
+  fetch(`/api/images/${foto}`, { method: 'DELETE' })
+    .then((res) => {
+      if (res.ok) {
+        cargarFotos();
+      }
+    });
+};
+
+document.getElementById('uploadForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const fileInput = document.getElementById('nuevaFoto');
+  if (!fileInput.files.length) return;
+  const formData = new FormData();
+  formData.append('image', fileInput.files[0]);
+  fetch('/api/images', { method: 'POST', body: formData })
+    .then((res) => res.ok && cargarFotos());
+});
+
+cargarFotos();
